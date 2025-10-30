@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aplikasi To-Do List- Mission 4</title>
+    <!-- style -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header>
+        <div class="profile">
+          <h2 id="profile-name">Nama Pengguna</h2>
+          <p id="profile-job">Jabatan</p>
+          <button id="edit-profile-button" class="edit-button">Edit</button>
+        </div>
+        <div id="time-display" class="time-display">Memuat waktu...</div>
+      </header>
+
+      <section class="input-section">
+        <h3>Buat Tugas Baru</h3>
+        <form id="todo-form">
+          <textarea
+            id="task-input"
+            placeholder="Tulis tugasmu di sini..."
+          ></textarea>
+
+          <div class="form-controls">
+            <label for="priority-input">Level Prioritas:</label>
+            <select id="priority-input">
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+
+            <button type="submit" id="submit-button">Tambah Tugas</button>
+          </div>
+        </form>
+      </section>
+
+      <main class="list-container">
+        <div class="list-column">
+          <h2>To Do</h2>
+          <ul id="todo-list"></ul>
+        </div>
+
+        <div class="list-column">
+          <h2>Done</h2>
+          <ul id="done-list"></ul>
+        </div>
+      </main>
+
+      <footer class="app-footer">
+        <button id="delete-all-button">Hapus Seluruh List</button>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

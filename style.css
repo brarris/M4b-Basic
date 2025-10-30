@@ -1,0 +1,395 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  background-color: #fdfaf6; /* Warna krem */
+  color: #3d3d3d; /* Warna teks sedikit lebih lembut dari hitam pekat */
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* --- Wadah Utama Aplikasi --- */
+.app-container {
+  max-width: 1000px; /* Sedikit lebih lebar untuk layout 2 kolom */
+  margin: 0 auto;
+  padding: 25px 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+}
+
+/* --- 1. Header: Profil & Waktu --- */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Responsive */
+  gap: 15px; /* Jarak jika wrapping */
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 20px;
+  margin-bottom: 25px;
+}
+
+.profile {
+  position: relative;
+  padding-right: 60px; /* Ruang untuk tombol edit */
+}
+
+header h2 {
+  color: #ff6347; /* Warna oranye */
+  margin-bottom: 2px;
+}
+
+header p,
+.profile-edit-input {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.time-display {
+  font-size: 0.9em;
+  font-style: italic;
+  color: #666;
+  text-align: right;
+  flex-shrink: 0; /* Mencegah teks saat menyusut */
+}
+
+/* Tombol Edit Profil */
+.edit-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  color: #555;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8em;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.edit-button:hover {
+  background: #e9e9e9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.profile-edit-input {
+  font-size: 1rem;
+  padding: 5px;
+  border: 1px solid #ff6347;
+  border-radius: 4px;
+  width: 100%;
+  margin-top: 5px;
+  outline: none; /* Hilangkan outline biru saat fokus */
+}
+
+/* --- 2. Bagian Input Tugas --- */
+.input-section h3 {
+  margin-bottom: 12px;
+  color: #333;
+  font-size: 1.25rem;
+}
+
+#todo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#task-input {
+  width: 100%;
+  min-height: 70px;
+  padding: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  resize: vertical; /* Izinkan user resize tinggi-nya saja */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Efek "focus" yang lebih jelas */
+#task-input:focus,
+#priority-input:focus,
+.profile-edit-input:focus {
+  border-color: #ff6347;
+  box-shadow: 0 0 0 3px rgba(255, 99, 71, 0.15);
+}
+
+.form-controls {
+  display: flex;
+  justify-content: flex-end; /* Pindahkan kontrol ke kanan */
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+#priority-input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  background-color: #fff; /* Pastikan background putih */
+}
+
+#submit-button {
+  background-color: #ff6347;
+  color: white;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border: none;
+  padding: 12px 20px; /* Tombol lebih besar */
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+#submit-button:hover {
+  background-color: #e55a40;
+  transform: translateY(-2px); /* Efek sedikit terangkat */
+}
+
+/* --- 3. Daftar List (To Do & Done) --- */
+.list-container {
+  display: grid; /* Gunakan Grid untuk layout kolom */
+  grid-template-columns: 1fr 1fr; /* Dua kolom sama lebar */
+  gap: 30px; /* Jarak antar kolom */
+  margin-top: 30px;
+}
+
+.list-column {
+  background: #fdfdfd;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  min-width: 0;
+}
+
+.list-column h2 {
+  color: #ff6347;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+}
+
+ul {
+  list-style-type: none;
+}
+
+/* --- 4. Tampilan per Item Tugas --- */
+.todo-item {
+  background: #ffffff;
+  padding: 15px;
+  margin-bottom: 12px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.03);
+
+  /* Gunakan display grid untuk tata letak item yang kompleks */
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* Checkbox | Teks & Waktu | Prioritas & Hapus */
+  align-items: center;
+  gap: 10px 15px;
+  transition: box-shadow 0.2s;
+}
+
+.todo-item:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+}
+
+/* Checkbox */
+.task-details {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+  display: flex; /* Tetap gunakan flex untuk menengahkan checkbox */
+  align-items: center;
+  justify-content: center;
+}
+
+.todo-checkbox {
+  transform: scale(1.3);
+  cursor: pointer;
+}
+
+/* Teks Tugas */
+.task-text {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  font-weight: 500;
+  color: #333;
+  word-break: break-word; /* Pecah kata jika terlalu panjang */
+}
+
+/* Waktu */
+.task-time {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  font-size: 0.85em;
+  color: #777;
+}
+
+/* Prioritas */
+.task-priority {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+  font-size: 0.8em;
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 4px;
+  color: white;
+  justify-self: end; /* Rata kanan */
+}
+
+.task-priority.Low {
+  background-color: #2ecc71;
+}
+.task-priority.Medium {
+  background-color: #f39c12;
+}
+.task-priority.High {
+  background-color: #e74c3c;
+}
+
+/* Tombol Hapus per Item */
+.delete-button {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+  background: none;
+  border: none;
+  color: #c0392b; /* Warna merah lebih lembut */
+  font-size: 0.9em;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  justify-self: end; /* Rata kanan */
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.delete-button:hover {
+  color: #fff;
+  background-color: #e74c3c;
+}
+
+/* --- 5. Styling untuk Tugas yang Selesai (Done) --- */
+.todo-item.done {
+  background-color: #f9f9f9;
+  opacity: 0.8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.todo-item.done .task-text {
+  text-decoration: line-through;
+  color: #888;
+  font-weight: 400;
+}
+
+/* Sembunyikan checkbox & prioritas di kolom 'Done' */
+.done-list .todo-checkbox,
+.done-list .task-priority {
+  display: none;
+}
+
+/* Atur ulang grid untuk kolom 'Done' */
+.done-list .task-text {
+  grid-column: 1 / 3;
+  padding-left: 10px;
+}
+.done-list .task-time {
+  grid-column: 1 / 3;
+  padding-left: 10px;
+}
+.done-list .delete-button {
+  grid-column: 3 / 4;
+  grid-row: 1 / 3; /* Tengahkan tombol hapus */
+  align-self: center;
+}
+
+/* --- 6. Footer (Tombol Delete All) --- */
+.app-footer {
+  text-align: center;
+  margin-top: 30px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 25px;
+}
+
+#delete-all-button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+#delete-all-button:hover {
+  background-color: #c0392b; /* Ubah jadi merah saat hover */
+  transform: translateY(-2px);
+}
+
+/* --- 7. Responsif (Mobile) --- */
+@media (max-width: 768px) {
+  body {
+    padding: 10px; /* Padding lebih kecil di HP */
+  }
+  .app-container {
+    padding: 20px 15px;
+  }
+
+  /* Ubah layout kolom jadi 1 */
+  .list-container {
+    grid-template-columns: 1fr; /* 1 kolom saja */
+    gap: 25px;
+  }
+
+  .form-controls {
+    /* Tombol submit akan di bawah prioritas */
+    flex-direction: column;
+    align-items: stretch; /* Penuhi lebar */
+  }
+
+  #submit-button {
+    width: 100%;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start; /* Ratakan kiri semua */
+  }
+
+  .time-display {
+    text-align: left;
+    width: 100%;
+  }
+
+  /* Perbaiki layout item di HP */
+  .todo-item {
+    grid-template-columns: auto 1fr; /* Checkbox | Sisanya */
+    gap: 10px;
+  }
+  .task-priority {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+    justify-self: start; /* Rata kiri */
+  }
+  .delete-button {
+    grid-column: 3 / 4;
+    grid-row: 1 / 4; /* Pindahkan ke kanan */
+    align-self: center;
+    justify-self: end;
+  }
+
+  .done-list .delete-button {
+    grid-row: 1 / 3;
+  }
+}
